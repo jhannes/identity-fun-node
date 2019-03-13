@@ -1,0 +1,19 @@
+{
+  "name": "identity-fun-node",
+  "version": "1.0.0",
+  "description": "Demonstration of OpenID Connect and Oauth2 with Microsoft Azure AD, ID-porten and Slack",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "get-json": "^1.0.1",
+    "node-static": "^0.7.11",
+    "qs": "^6.6.0"
+  }
+}
