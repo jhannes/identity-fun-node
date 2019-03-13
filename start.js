@@ -43,15 +43,12 @@ app.get("/id/:provider/authenticate", (req, res) => {
     const provider = providers[req.params.provider];
 
     const { domain_hint } = req.query;
-    const { authorization_endpoint, client_id, redirect_uri, scopes_supported } = provider;
+    const { authorization_endpoint } = provider;
 
-    const scope = scopes_supported.join(" ");
     const state = randomString(50);
     req.session.state = state;
-    const response_type = "code";
 
     const authorization_request = authorization_endpoint + "?" + qs.stringify({
-        client_id, redirect_uri, response_type, scope, state, domain_hint
     });
 
     res.setHeader("Content-Type", "text/html");
@@ -69,16 +66,14 @@ app.get("/id/:provider/authenticate", (req, res) => {
 app.get("/id/:provider/oauth2callback", (req, res) => {
     const provider = providers[req.params.provider];
 
-    const { token_endpoint, client_id, redirect_uri, client_secret } = provider;
-    const { code, state } = req.query;
+    const { token_endpoint } = provider;
+    const { state } = req.query;
 
     if (req.session.state !== state) {
         console.warn("Unexpected state in oauth2callback, XSRF attempt?");
     }
 
     const payload = qs.stringify({
-        client_id, client_secret, redirect_uri,
-        code, grant_type: "authorization_code"
     });
 
     const next_step = "/id/" + req.params.provider + "/token?" + payload;
@@ -129,9 +124,7 @@ app.get("/id/:provider/session", (req, res) => {
 
     const { access_token, id_token, refresh_token } = tokenResponse;
 
-    console.log(Buffer.from(id_token.split(".")[1], 'base64').toString('ascii'));
-
-    const id_token_payload = JSON.parse(Buffer.from(id_token.split(".")[1], 'base64').toString('ascii'));
+    const id_token_payload = null;
     console.log({ id_token_payload });
 
     const session = { access_token, refresh_token, id_token_payload };
