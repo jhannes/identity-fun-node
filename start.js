@@ -20,7 +20,14 @@ function printUrl(url) {
         .replace(/\?/g, "<br />&nbsp;&nbsp;&nbsp;&nbsp;?")
 }
 
+function parseJwt (token) {
+    var base64Url = token.split('.')[1];
+    var base64 = decodeURIComponent(Buffer.from(base64Url, 'base64').toString('utf-8').split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
 
+    return JSON.parse(base64);
+};
 
 const app = express()
 
@@ -124,7 +131,7 @@ app.get("/id/:provider/session", (req, res) => {
 
     const { access_token, id_token, refresh_token } = tokenResponse;
 
-    const id_token_payload = null;
+    const id_token_payload = parseJwt(id_token);
     console.log({ id_token_payload });
 
     const session = { access_token, refresh_token, id_token_payload };
