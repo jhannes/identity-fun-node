@@ -20,7 +20,7 @@ The following Postman collection has documentation and examples for you to follo
 
 ### Task 0: Make sure the application runs
 
-Run `npm start`. The server should start on port 8080 (change `start.js` if this port is unavailable). Go to http://localhost:8080. You should see a welcome page with the option of authorizing with several providers.
+Run `node start`. The server should start on port 8080 (change `start.js` if this port is unavailable). Go to http://localhost:8080. You should see a welcome page with the option of authorizing with several providers.
 
 Try to select Login with Google. It will generate a link that is invalid. Your task is to fix this
 
